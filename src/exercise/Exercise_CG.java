@@ -30,4 +30,16 @@ public class Exercise_CG {
 		int sum = a + b;
 		return Math.multiplyExact(sum, 2);
 	}
+	public void printPyramid(int n) {
+        // number of rows
+        for (int i=0; i<n; i++){
+            for (int j=n-i; j>1; j--){
+                System.out.print(" ");
+            }
+            for (int j=0; j<=i; j++ ){
+                System.out.print("* ");
+            }
+            System.out.println();
+        }
+    }
 }
