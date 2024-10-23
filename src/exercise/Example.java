@@ -1,13 +1,14 @@
-package controller;
+package exercise;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Main {
-
-	public static void main(String[] args) {
-		System.out.println("Hallo Teilnehmer!");		
+public class Example {
+	public int ganzZahl;
+	
+	public void demonstration() {
+		System.out.println("Hallo Teilnehmer!");
 		
 		// primitive Datentypen (numerisch), Ganzzahl
 		byte ganzKleineZahl = 127;
@@ -42,6 +43,33 @@ public class Main {
 		// alle Werte der Hashmap ausgeben
 		System.out.println(hauptStaedte);
 		
-		}
+		// Klassenreferenzierung (Klassenobjekt) und Aufruf einer fremden Methode
+		Example example = new Example();
+		int result = example.calculateRectangleArea(5, 10);
+		// Ganz schlechte Praxis!
+		example.ganzZahl = 5;
+		
+		// Besser mit Set & Get:
+		example.setGanzZahl(5); // setze die Zahl in der Example-Klasse
+		int exampleNumber = example.getGanzZahl(); // hole die gesetzte Zahl aus der Example-Klasse
+		
+	}
 
+	// public -> Sichtbarkeit, int -> Rückgabetyp, zahl1/zahl2 -> Übergabeparameter
+	// return -> Rückgabeanweisung (Wert = result)
+	public int calculateRectangleArea(int zahl1, int zahl2) {
+		int result = zahl1 * zahl2;
+		return result;
+	}
+	
+	// Getter & Setter = Holen & Setzen -> Zugriffsmethode / Akzessor
+	public int getGanzZahl() {
+		return ganzZahl;
+	}
+
+	public void setGanzZahl(int ganzZahl) {
+		this.ganzZahl = ganzZahl;
+	}
+	
 }
+
