@@ -1,8 +1,10 @@
-package controller;
+package launcher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import exercise.Example;
 
 public class Main {
 
@@ -41,6 +43,17 @@ public class Main {
 		
 		// alle Werte der Hashmap ausgeben
 		System.out.println(hauptStaedte);
+		
+		// Klassenreferenzierung (Klassenobjekt) und Aufruf einer fremden Methode
+		Example example = new Example();
+		int result = example.calculateRectangleArea(5, 10);
+		// Ganz schlechte Praxis!
+		example.ganzZahl = 5;
+		
+		// Besser mit Set & Get:
+		example.setGanzZahl(5); // setze die Zahl in der Example-Klasse
+		int exampleNumber = example.getGanzZahl(); // hole die gesetzte Zahl aus der Example-Klasse
+		System.out.println(exampleNumber);
 		
 		}
 
