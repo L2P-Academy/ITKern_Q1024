@@ -1,7 +1,59 @@
 package exercise;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class Example {
 	public int ganzZahl;
+	
+	public void demonstration() {
+		System.out.println("Hallo Teilnehmer!");
+		
+		// primitive Datentypen (numerisch), Ganzzahl
+		byte ganzKleineZahl = 127;
+		short kleineZahl = 32767;
+		int ganzZahl = 2123456789;
+		long grosseZahl = 9223372036854775807L;
+		
+		// Dezimalzahlen
+		float ungenaueKommazahl = 3.14159f;
+		double genaueKommazahl = 3.333333333333333333;
+		
+		// weitere Datentypen
+		boolean wahrheitsWert = true; // oder false
+		char buchstabe = 'a';
+		
+		// komplexe Datentypen
+		String text1 = new String("abc");
+		// oder 
+		String text2 = "abc"; // -> ohne new klappt nur mit Strings!!!
+		List<String> list = new ArrayList<>();
+		HashMap<String, String> hauptStaedte = new HashMap<>();
+		hauptStaedte.put("Deutschland", "Berlin");
+		hauptStaedte.put("Griechenland", "Athen");
+		hauptStaedte.put("Polen", "Warszawa");
+		hauptStaedte.put("Somalia", "Mogadischu");
+		hauptStaedte.put("Peru", "Lima");
+		hauptStaedte.put("Türkei", "Ankara");
+		
+		// Einen Wert aus der Hashmap erhalten (über Key)
+		System.out.println(hauptStaedte.get("Deutschland"));
+		
+		// alle Werte der Hashmap ausgeben
+		System.out.println(hauptStaedte);
+		
+		// Klassenreferenzierung (Klassenobjekt) und Aufruf einer fremden Methode
+		Example example = new Example();
+		int result = example.calculateRectangleArea(5, 10);
+		// Ganz schlechte Praxis!
+		example.ganzZahl = 5;
+		
+		// Besser mit Set & Get:
+		example.setGanzZahl(5); // setze die Zahl in der Example-Klasse
+		int exampleNumber = example.getGanzZahl(); // hole die gesetzte Zahl aus der Example-Klasse
+		
+	}
 
 	// public -> Sichtbarkeit, int -> Rückgabetyp, zahl1/zahl2 -> Übergabeparameter
 	// return -> Rückgabeanweisung (Wert = result)
