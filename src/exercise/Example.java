@@ -25,9 +25,11 @@ public class Example {
 		char buchstabe = 'a';
 		
 		// komplexe Datentypen
-		String text1 = new String("abc");
+		String text1 = new String("abc");		
 		// oder 
 		String text2 = "abc"; // -> ohne new klappt nur mit Strings!!!
+		
+		
 		List<String> list = new ArrayList<>();
 		HashMap<String, String> hauptStaedte = new HashMap<>();
 		hauptStaedte.put("Deutschland", "Berlin");
