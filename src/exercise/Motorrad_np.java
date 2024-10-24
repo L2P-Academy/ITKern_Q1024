@@ -19,7 +19,7 @@ public class Motorrad_np {
 		 * Marke;
 		 * Farbe;
 		 */
-		
+		 
 		// Attribute
 		int kmStand; // -> beim "this" wird das hier verwendet
 		int bauJahr;
