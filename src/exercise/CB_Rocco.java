@@ -1,4 +1,5 @@
 package exercise;
+
 import java.awt.*;
 
 import java.awt.event.*;
@@ -8,7 +9,6 @@ import java.io.File;
 import java.io.FileWriter;
 
 import java.io.IOException;
-
 
 import javax.accessibility.Accessible;
 
@@ -36,311 +36,275 @@ import javax.swing.JTextField;
 
 import javax.swing.filechooser.FileFilter;
 
+public class CB_Rocco extends JFrame implements ActionListener, WindowListener {
 
-public class CB_Rocco2 extends Frame implements ActionListener, WindowListener 
+	public CB_Rocco() {
 
-{
+		CB_Rocco Fenster1 = new CB_Rocco();
 
-  public static void main(String args[])
+		Fenster1.setSize(240, 420);
 
-  {
+		Fenster1.setLocation(450, 400);
 
-	  CB_Rocco2 Fenster1 = new CB_Rocco2();
+		Fenster1.setTitle("Pv_Anlage_Test");
 
-     Fenster1.setSize(240, 420);
+		Fenster1.setBackground(Color.BLUE);
 
-     Fenster1.setLocation(450, 400);
+		Fenster1.setVisible(true);
 
-     Fenster1.setTitle("Pv_Anlage_Test");
+		JButton button = new JButton("Öffnen");
 
-     Fenster1.setBackground(Color.BLUE);
+		button.addActionListener(
 
-     Fenster1.show();
+				new ActionListener() {
 
+					public void actionPerformed(ActionEvent ae) {
 
+						JFileChooser fc = new JFileChooser();
 
-     JButton button = new JButton("Öffnen");
+						fc.setFileFilter(new FileFilter()
 
-     button.addActionListener(
+				{
 
-    		 new ActionListener() {
+							@Override
+							public boolean accept(File f)
 
+				{
 
-					public void actionPerformed( ActionEvent ae) {
+								return f.isDirectory() ||
 
-						JFileChooser fc = new JFileChooser(); 
+										f.getName().toLowerCase().endsWith(".txt");
 
+							}
 
-					    fc.setFileFilter( new FileFilter() 
+							@Override
+							public String getDescription()
 
-					    { 
+				{
 
-					      @Override public boolean accept( File f ) 
+								return "*.txt";
 
-					      { 
+							}
 
-					        return f.isDirectory() || 
+						});
 
-					          f.getName().toLowerCase().endsWith( ".txt" ); 
+						int state = fc.showOpenDialog(null);
 
-					      } 
+						if (state == JFileChooser.APPROVE_OPTION)
 
-					      @Override public String getDescription() 
+				{
 
-					      { 
+							File file = fc.getSelectedFile();
 
-					        return "*.txt"; 
+							System.out.println(file.getName());
 
-					      } 
+						}
 
-					    } ); 
+				else
 
+				{
 
-					    int state = fc.showOpenDialog( null ); 
+							System.exit(0);
 
-
-					    if ( state == JFileChooser.APPROVE_OPTION ) 
-
-					    { 
-
-					      File file = fc.getSelectedFile(); 
-
-					      System.out.println( file.getName() ); 
-
-					    } 
-
-					    else 
-
-					    	{
-
-					    	System.exit( 0 );
-
-
-					    	}
+						}
 
 					}
 
-    		 }
+				}
 
+		);
 
-);	
+		JTabbedPane tab = new JTabbedPane();
 
- 	    JTabbedPane tab = new JTabbedPane();
+		Fenster1.add(tab, BorderLayout.CENTER);
 
- 	    Fenster1.add(tab,BorderLayout.CENTER);
+		JLabel l1 = new JLabel("PV-Ertrag");
 
+		JLabel l2 = new JLabel("Batterieladung");
 
+		JLabel l11 = new JLabel("Einspeisung LEW");
 
+		JLabel l4 = new JLabel("Gesamtverbrauch Haus");
 
+		JLabel l5 = new JLabel("Batterie Verbrauch");
 
- 	    JLabel l1 = new JLabel("PV-Ertrag");
+		JLabel l3 = new JLabel("Netzbezug LEW");
 
- 	    JLabel l2 = new JLabel("Batterieladung");
- 	    
- 	   JLabel l11 = new JLabel("Einspeisung LEW");
+		JLabel l10 = new JLabel("Bemerkung");
 
- 	    JLabel l4 = new JLabel("Gesamtverbrauch Haus");
- 	    
- 	    JLabel l5 = new JLabel("Batterie Verbrauch");
+		JLabel l8 = new JLabel("LEW Grundgebühr €");
 
- 	    JLabel l3 = new JLabel ("Netzbezug LEW");
+		JLabel l9 = new JLabel("LEW Zählerkosten €");
 
- 	    JLabel l10 = new JLabel("Bemerkung");
+		JLabel l7 = new JLabel("Verbrauchspreis €");
 
+		JLabel l6 = new JLabel("Einspeisung €");
 
- 	    JLabel l8 = new JLabel ("LEW Grundgebühr €");
+		JLabel l12 = new JLabel("Anmerkungen");
 
- 	    JLabel l9 = new JLabel ("LEW Zählerkosten €");
+		JTextField TextFeld = new JTextField(
+				"                                                                           ");
 
- 	    JLabel l7 = new JLabel ("Verbrauchspreis €");
+		JTextField TextFeld2 = new JTextField(
+				"                                                                         ");
 
- 	    JLabel l6 = new JLabel ("Einspeisung €");
+		JTextField TextFeld3 = new JTextField(
+				"                                                                         ");
 
- 	    JLabel l12 = new JLabel ("Anmerkungen");
+		JTextField TextFeld4 = new JTextField(
+				"                                                                         ");
 
+		JTextField TextFeld5 = new JTextField(
+				"                                                                          ");
 
+		JTextField TextFeld6 = new JTextField(
+				"                                                                          ");
 
- 	    JTextField TextFeld = new JTextField("                                                                           ");
+		JTextField TextFeld7 = new JTextField(
+				"                                                                          ");
 
- 	    JTextField TextFeld2 = new JTextField ("                                                                         ");
+		JTextField TextFeld8 = new JTextField(
+				"                                                                          ");
 
- 	    JTextField TextFeld3 = new JTextField ("                                                                         ");
+		JTextField TextFeld9 = new JTextField(
+				"                                                                          ");
 
- 	    JTextField TextFeld4 = new JTextField ("                                                                         ");
+		JTextArea TextFeld10 = new JTextArea(10, 20);
 
- 	    JTextField TextFeld5 = new JTextField("                                                                          ");
+		JTextField TextFeld11 = new JTextField(
+				"                                                                         ");
 
- 	    JTextField TextFeld6 = new JTextField("                                                                          ");
+		JPanel panel = new JPanel();
 
- 	    JTextField TextFeld7 = new JTextField("                                                                          ");
+		panel.add(l1);
 
- 	    JTextField TextFeld8 = new JTextField("                                                                          ");
+		panel.add(TextFeld);
 
- 	    JTextField TextFeld9 = new JTextField("                                                                          ");
+		panel.add(l2);
 
- 	    JTextArea TextFeld10 = new JTextArea(10, 20);
+		panel.add(TextFeld2);
 
- 	    JTextField TextFeld11 = new JTextField("                                                                         ");
+		panel.add(l3);
 
+		panel.add(TextFeld3);
 
- 	    JPanel panel = new JPanel();
+		panel.add(l4);
 
+		panel.add(TextFeld4);
 
- 	       panel.add(l1);
+		panel.add(l11);
 
- 	       panel.add(TextFeld);
+		panel.add(TextFeld11);
 
- 	       panel.add(l2);
+		panel.add(l5);
 
- 	       panel.add(TextFeld2);
+		panel.add(TextFeld5);
 
- 	       panel.add(l3);
+		panel.add(button);
 
- 	       panel.add(TextFeld3);
+		tab.add("PV-Tagesdaten", panel);
 
- 	       panel.add(l4);
+		JPanel panel1 = new JPanel();
 
- 	       panel.add(TextFeld4);
+		panel1.add(l6);
 
- 	       panel.add(l11);
+		panel1.add(TextFeld6);
 
- 	       panel.add(TextFeld11);
+		panel1.add(l7);
 
- 	       panel.add(l5);
+		panel1.add(TextFeld7);
 
- 	       panel.add(TextFeld5);
+		panel1.add(l8);
 
- 	       panel.add(button);
+		panel1.add(TextFeld8);
 
- 	       tab.add("PV-Tagesdaten",panel);
+		panel1.add(l9);
 
+		panel1.add(TextFeld9);
 
- 	    JPanel panel1 = new JPanel();
+		tab.add("LEW Grunddaten", panel1);
 
- 	       panel1.add(l6);
+		JPanel panel2 = new JPanel();
 
- 	       panel1.add(TextFeld6);
+		panel2.add(l10);
 
- 	       panel1.add(l7);
+		panel2.add(TextFeld10);
 
- 	       panel1.add(TextFeld7);
+		tab.add("Wichtig!!!", panel2);
 
- 	       panel1.add(l8);
+		MenuBar hauptMenue = new MenuBar();
 
- 	       panel1.add(TextFeld8);
+		Menu menue1 = new Menu("Datei(T)");
 
- 	       panel1.add(l9);
+		Menu menue4 = new Menu("Hilfe(T)");
 
- 	       panel1.add(TextFeld9);
+		menue1.add("Laden(T)");
 
- 	       tab.add("LEW Grunddaten", panel1);
+		menue1.add("Speichern(T)");
 
+		menue1.add("Speichern unter(T)");
 
- 	    JPanel panel2 = new JPanel();
+		menue1.addSeparator();
 
- 	    	panel2.add(l10);
+		menue1.add("Beenden");
 
- 	    	panel2.add(TextFeld10);
+		menue4.add("Index(T)");
 
- 	    	tab.add("Wichtig!!!", panel2);
+		menue4.add("Hilfe(T)");
 
-  }
+		hauptMenue.add(menue1);
 
+		hauptMenue.setHelpMenu(menue4);
 
+		setMenuBar(hauptMenue);
 
-  public CB_Rocco2 ()
+		menue1.addActionListener(this);
 
-  {
+		addWindowListener(this);
 
-     MenuBar hauptMenue = new MenuBar();
+	}
 
-     Menu menue1 = new Menu("Datei(T)");
+	public void actionPerformed(ActionEvent evt)
 
-     Menu menue4 = new Menu("Hilfe(T)");
+	{
 
-     menue1.add("Laden(T)");
+		if (evt.getSource() instanceof MenuItem)
 
-     menue1.add("Speichern(T)");
+		{
 
-     menue1.add("Speichern unter(T)");
+			String menuAdd = evt.getActionCommand();
 
-     menue1.addSeparator();
+			if (menuAdd.equals("Beenden"))
+				System.exit(0);
 
-     menue1.add("Beenden");
+		}
 
-     menue4.add("Index(T)");
+	}
 
-     menue4.add("Hilfe(T)");
+	public void windowClosing(WindowEvent evt)
 
-     hauptMenue.add(menue1);
+	{
 
-     hauptMenue.setHelpMenu(menue4);
+		System.exit(0);
 
-     setMenuBar(hauptMenue);
+	}
 
-     menue1.addActionListener(this);
+	public void windowOpened(WindowEvent evt) {
+	}
 
-     addWindowListener(this); 
+	public void windowIconified(WindowEvent evt) {
+	}
 
-   }
+	public void windowDeiconified(WindowEvent evt) {
+	}
 
+	public void windowClosed(WindowEvent evt) {
+	}
 
-  public void actionPerformed(ActionEvent evt)
+	public void windowActivated(WindowEvent evt) {
+	}
 
-  {
-
-     if (evt.getSource() instanceof MenuItem)
-
-    {
-
-       String menuAdd = evt.getActionCommand();
-
-       if (menuAdd.equals("Beenden")) System.exit(0);
-
-     }
-
-   }
-
-
-  public void windowClosing(WindowEvent evt)
-
-  {
-
-     System.exit(0);
-
-   }
-
-
-  public void windowOpened(WindowEvent evt){}
-
-  public void windowIconified(WindowEvent evt){}
-
-  public void windowDeiconified(WindowEvent evt){}
-
-  public void windowClosed(WindowEvent evt){}
-
-  public void windowActivated(WindowEvent evt){}
-
-  public void windowDeactivated(WindowEvent evt){}
-
-
-
-
-
-
+	public void windowDeactivated(WindowEvent evt) {
+	}
 
 }
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
