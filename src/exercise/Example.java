@@ -71,5 +71,26 @@ public class Example {
 		this.ganzZahl = ganzZahl;
 	}
 	
+	
+	  int S1 = 236;
+      double S2 = 13524687464674.0;
+      long S3 = 13_544;
+      
+      
+  
+  
+  public static void main (int S1 , double S2)   {
+    
+      System.out.println("Der Flächeninhaltet beträgt:"+ (long)(S1*S2)+" Meter²"); //casten
+      
+  }
+  public static void main (int S1 , double S2, long S3)   {
+    
+      System.out.println("Das Volumen beträgt:"+(long)(S1*S2*S3)+" Meter³");
+
+      int x = 1;
+      int y =++x+x++;
+      System.out.println(y);
+  }
 }
 
