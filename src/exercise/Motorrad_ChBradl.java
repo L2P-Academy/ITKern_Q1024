@@ -44,7 +44,7 @@ public void setLeistung_kw(int leistung_kw) {
     this.leistung_kw = leistung_kw;
     }  
 
-public void  Motorrad_ChBradl () {
+public void  showBikeInformation () {
     System.out.println("Hersteller: " + marke);
     System.out.println("Version: " + version);
     System.out.println("Leistung in PS/KW: " + leistung_ps +" PS / "+ leistung_kw + " kW");
