@@ -29,7 +29,7 @@ public class Motorrad_np {
 		/*
 		 * 
 		 * // Konstruktor
-		 * Konstruktor Auto(kmStand, baujahr, marke, farbe):
+		 * Konstruktor Motorrad_np(kmStand, baujahr, marke, farbe):
 		 * 		setze Farbe auf farbe;
 		 * 		setze Marke auf marke;
 		 * 		setze Baujahr auf baujahr;
@@ -103,7 +103,12 @@ public class Motorrad_np {
 		// Methode zum fahren und ändern des kmStandes
 		public int fahren(int strecke) {
 			int neuerKmStand = this.kmStand + strecke;
-			return neuerKmStand;		
+			return neuerKmStand;
+			
+	
+			
+				
+
 		}
 	}
 		
