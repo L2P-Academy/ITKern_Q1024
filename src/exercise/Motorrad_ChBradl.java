@@ -46,12 +46,12 @@ public Motorrad_ChBradl(String marke, int version, double leistung_ps, double le
 	}
 
 public double PS_in_KW(double umrechnene_PS_KW) {
-	double PS_in_KW_umrechnene = this.leistung_ps * 1,355141;
+	double PS_in_KW_umrechnene = this.leistung_ps * 1.355141;
 	return PS_in_KW_umrechnene;	
 }
 
 public double KW_in_PS(double umrechnene_KW_PS) {
-	double KW_in_PS_umrechnene = this.leistung_kw * 1,355141;
+	double KW_in_PS_umrechnene = this.leistung_kw * 1.355141;
 	return KW_in_PS_umrechnene;	
 }
 
