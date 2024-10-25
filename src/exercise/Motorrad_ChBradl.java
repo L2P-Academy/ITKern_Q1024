@@ -1,18 +1,12 @@
 package exercise;
+
 public class Motorrad_ChBradl {
 	String marke;	//Honda RC213V (HRC)
 	int version;		//2024"er-Version"
-	int leistung_ps;	//290" PS"
-	int leistung_kw;	//214" KW"	
-	
-public Motorrad_ChBradl(String marke, int version, int leistung_ps, int leistung_kw) {
-    this.marke = marke;
-    this.version = version;
-    this.leistung_ps = leistung_ps;
-    this.leistung_kw = leistung_kw;
-	}
+	double leistung_ps;	//290" PS"
+	double leistung_kw;	//214" KW"		
 
-public int getMarke() {
+public String getMarke() {
     return marke;
     }
 
@@ -28,21 +22,39 @@ public void setVersion(int version) {
     this.version = version;
     }       
 
-public int getLeistung_ps() {
+public double getLeistung_ps() {
     return leistung_ps;
     }
 
-public void setLeistung_ps(int leistung_ps) {
+public void setLeistung_ps(double leistung_ps) {
     this.leistung_ps = leistung_ps;
     }    
 
-public int getLeistung_kw() {
+public double getLeistung_kw() {
     return leistung_kw;
     }
 
-public void setLeistung_kw(int leistung_kw) {
+public void setLeistung_kw(double leistung_kw) {
     this.leistung_kw = leistung_kw;
     }  
+
+public Motorrad_ChBradl(String marke, int version, double leistung_ps, double leistung_kw) {
+    this.marke = marke;
+    this.version = version;
+    this.leistung_ps = leistung_ps;
+    this.leistung_kw = leistung_kw;
+	}
+
+public double PS_in_KW(double umrechnene_PS_KW) {
+	double PS_in_KW_umrechnene = this.leistung_ps * 1,355141;
+	return PS_in_KW_umrechnene;	
+}
+
+public double KW_in_PS(double umrechnene_KW_PS) {
+	double KW_in_PS_umrechnene = this.leistung_kw * 1,355141;
+	return KW_in_PS_umrechnene;	
+}
+
 
 public void  showBikeInformation () {
     System.out.println("Hersteller: " + marke);
