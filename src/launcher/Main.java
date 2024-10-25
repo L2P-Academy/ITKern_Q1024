@@ -1,14 +1,8 @@
 package launcher;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import exercise.Auto;
-import exercise.CB_Rocco;
-import exercise.Example;
-import exercise.Motorrad_tm;
 
 // DO NOT PUSH THIS CLASS
 public class Main {  
