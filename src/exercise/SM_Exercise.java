@@ -30,8 +30,8 @@ Scanner scanner = new Scanner(System.in);
 	System.out.println("Gesamtpreis Standard:" + gesamtPreisVorRabatt + " €");
 	System.out.println("Gesamtpreis Rabatt:" + gesamtPreisNachRabatt + " €");
 	System.out.println("Gesamtpreis Insgesamt:" + gesamtErsparnis + " €");
-	
-	}}
-
-
+	}
 }
+
+
+
