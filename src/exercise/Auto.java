@@ -80,4 +80,11 @@ public class Auto {
 		int neuerKmStand = this.kmStand + strecke;
 		return neuerKmStand;		
 	}
+	
+	public void showCarInfo() {
+		System.out.println(getBauJahr());
+		System.out.println(getKmStand());
+		System.out.println(getMarke());
+		System.out.println(getFarbe());
+	}
 }
