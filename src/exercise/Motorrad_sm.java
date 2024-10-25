@@ -1,6 +1,6 @@
 package exercise;
 
-public class Motorrad_sm {
+public class Motorrad_sm  {
 	
 	int kmStand;
 	int bauJahr;
