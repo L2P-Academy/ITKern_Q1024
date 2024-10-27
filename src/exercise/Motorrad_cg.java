@@ -105,7 +105,8 @@ public class Motorrad_cg {
 	public void printWithTab() {
 		System.out.println("\tBaujahr: "+this.getBaujahr());
 		System.out.println("\tKilometerstand: "+this.getKmStand());
-		System.out.println("\tLeistung: "+this.getLeistungKw()+" ps");
+		System.out.println("\tLeistung [PS]: "+this.getLeistungPs());
+		System.out.println("\tLeistung [KW]: "+this.getLeistungKw());
 		System.out.println("\tMarke: "+this.getMarke());
 	}
 	public void beispiel() {
