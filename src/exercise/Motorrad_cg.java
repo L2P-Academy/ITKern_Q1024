@@ -32,7 +32,7 @@ public class Motorrad_cg {
 		return marke;
 	}
 	public void setMarke(String marke) {
-		this.marke = marke;
+		this.marke = marke + " motorrad";
 	}
 	public double getDoubleKmStand() {
 		return doubleKmStand;
@@ -103,11 +103,11 @@ public class Motorrad_cg {
 				+ "]";
 	}
 	public void printWithTab() {
-		System.out.println("\tBaujahr: "+this.getBaujahr());
-		System.out.println("\tKilometerstand: "+this.getKmStand());
-		System.out.println("\tLeistung [PS]: "+this.getLeistungPs());
-		System.out.println("\tLeistung [KW]: "+this.getLeistungKw());
-		System.out.println("\tMarke: "+this.getMarke());
+		System.out.println("\tBaujahr: "+baujahr);
+		System.out.println("\tKilometerstand: "+kmStand);
+		System.out.println("\tLeistung [PS]: "+leistungPs);
+		System.out.println("\tLeistung [KW]: "+leistungKw);
+		System.out.println("\tMarke: "+marke);
 	}
 	public void beispiel() {
 		System.out.println();
@@ -127,9 +127,9 @@ public class Motorrad_cg {
 		obj1.print();
 		Motorrad_cg obj2 = new Motorrad_cg(
 				150000,
-				2020,
+				2010,
 				"yamaha",
-				60
+				"60"
 				);
 		obj2.print();
 		System.out.println();
@@ -150,6 +150,7 @@ public class Motorrad_cg {
 	}
 	int calcHpToKw(String ps) {
 		double result = Double.valueOf(ps);
+		result = Double.parseDouble(ps);
 		return (int) (result * 0.7457);
 	}
 }
