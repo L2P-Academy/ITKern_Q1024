@@ -3,21 +3,30 @@ package exercise;
 public class Motorrad_cg {
 	
 	int kmStand;
-	int bauJahr;
+	double doubleKmStand;
+	int baujahr;
+	double doubleBaujahr;
 	String marke;
-	int leistung;
+	int leistungKw;
+	String leistungPs;
 	
+	public int getLeistungKw() {
+		return leistungKw;
+	}
+	public void setLeistungKw(int leistungKw) {
+		this.leistungKw = leistungKw;
+	}
+	public String getLeistungPs() {
+		return leistungPs;
+	}
+	public void setLeistungPs(String leistungPs) {
+		this.leistungPs = leistungPs;
+	}
 	public int getKmStand() {
 		return kmStand;
 	}
 	public void setKmStand(int kmStand) {
 		this.kmStand = kmStand;
-	}
-	public int getBauJahr() {
-		return bauJahr;
-	}
-	public void setBauJahr(int bauJahr) {
-		this.bauJahr = bauJahr;
 	}
 	public String getMarke() {
 		return marke;
@@ -25,17 +34,55 @@ public class Motorrad_cg {
 	public void setMarke(String marke) {
 		this.marke = marke;
 	}
-	public int getLeistung() {
-		return leistung;
+	public double getDoubleKmStand() {
+		return doubleKmStand;
 	}
-	public void setLeistung(int leistung) {
-		this.leistung = leistung;
+	public void setDoubleKmStand(double doubleKmStand) {
+		this.doubleKmStand = doubleKmStand;
 	}
-	public Motorrad_cg(int kmStand, int bauJahr, String marke, int leistung) {
+	public int getBaujahr() {
+		return baujahr;
+	}
+	public void setBaujahr(int baujahr) {
+		this.baujahr = baujahr;
+	}
+	public double getDoubleBaujahr() {
+		return doubleBaujahr;
+	}
+	public void setDoubleBaujahr(double doubleBaujahr) {
+		this.doubleBaujahr = doubleBaujahr;
+	}
+	public Motorrad_cg(double kmStand, double bauJahr, String marke, int leistungKw) {
+		this.doubleKmStand = kmStand;
+		this.doubleBaujahr = bauJahr;
+		this.marke = marke + " motorrad";
+		this.leistungKw = leistungKw;
+		this.leistungPs = calcKwToHp(leistungKw);
+	}
+	public Motorrad_cg(int kmStand, int bauJahr, String marke, int leistungKw) {
 		this.kmStand = kmStand;
-		this.bauJahr = bauJahr;
-		this.marke = marke;
-		this.leistung = leistung;
+		this.doubleKmStand = kmStand;
+		this.baujahr = bauJahr;
+		this.doubleBaujahr = bauJahr;
+		this.marke = marke + " motorrad";
+		this.leistungKw = leistungKw;
+		this.leistungPs = calcKwToHp(leistungKw);
+	}
+	public Motorrad_cg(double kmStand, double bauJahr, String marke, String leistungPs) {
+		this.doubleKmStand = kmStand;
+		this.doubleBaujahr = bauJahr;
+		this.marke = marke + " motorrad";
+		this.leistungPs = leistungPs;
+		this.leistungKw = calcHpToKw(leistungPs);
+	}
+	public Motorrad_cg(int kmStand, int bauJahr, String marke, String leistungPs) {
+		this.kmStand = kmStand;
+		this.doubleKmStand = kmStand;
+		this.baujahr = bauJahr;
+		this.doubleBaujahr = bauJahr;
+		this.marke = marke + " motorrad";
+		this.leistungPs = leistungPs;
+		this.leistungKw = calcHpToKw(leistungPs);
 	}
 	public Motorrad_cg() {}
 	public void print() {
@@ -46,13 +93,19 @@ public class Motorrad_cg {
 	}
 	@Override
 	public String toString() {
-		return "Motorrad_cg [\t\nKilometerstand=" + kmStand + ",\t\n Baujahr=" + bauJahr + ",\t\n Marke=" + marke + ",\t\n Leistung="
-				+ leistung + " ps\n]";
+		return ""
+				+ "Motorrad_cg ["
+				+ "\t\nKilometerstand=" + doubleKmStand
+				+ ",\t\n Baujahr=" + doubleBaujahr
+				+ ",\t\n Marke=" + marke
+				+ ",\t\n Leistung [kw]=" + leistungKw + "\n"
+				+ ",\t\n Leistung [ps]=" + leistungPs + "\n"
+				+ "]";
 	}
 	public void printWithTab() {
-		System.out.println("\tBaujahr: "+this.getBauJahr());
+		System.out.println("\tBaujahr: "+this.getBaujahr());
 		System.out.println("\tKilometerstand: "+this.getKmStand());
-		System.out.println("\tLeistung: "+this.getLeistung()+" ps");
+		System.out.println("\tLeistung: "+this.getLeistungKw()+" ps");
 		System.out.println("\tMarke: "+this.getMarke());
 	}
 	public void beispiel() {
@@ -66,9 +119,9 @@ public class Motorrad_cg {
 				50
 				);
 		obj1.print();
-		obj1.setBauJahr(1990);
+		obj1.setBaujahr(1990);
 		obj1.setKmStand(1000);
-		obj1.setLeistung(40);
+		obj1.setLeistungKw(40);
 		obj1.setMarke("abc");
 		obj1.print();
 		Motorrad_cg obj2 = new Motorrad_cg(
@@ -84,5 +137,18 @@ public class Motorrad_cg {
 		System.out.println();
 		System.out.println("Motorrad 2:");
 		obj2.printWithTab();
+	}
+	String calcKwToHp(double kw) {
+		return String.valueOf(leistungKw * 1.341);
+	}
+	String calcKwToHp(int kw) {
+		return String.valueOf(kw * 1.341);
+	}
+	int calcHpToKw(double ps) {
+		return (int) (ps * 0.7457);
+	}
+	int calcHpToKw(String ps) {
+		double result = Double.valueOf(ps);
+		return (int) (result * 0.7457);
 	}
 }
