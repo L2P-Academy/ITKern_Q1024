@@ -1,5 +1,6 @@
 package exercise;
 
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,17 +19,47 @@ public class Example {
 		
 		// Dezimalzahlen
 		float ungenaueKommazahl = 3.14159f;
-		double genaueKommazahl = 3.333333333333333333;
+		double genaueKommazahl = 128;
 		
 		// weitere Datentypen
 		boolean wahrheitsWert = true; // oder false
 		char buchstabe = 'a';
 		
+		// Type-Casting = Umwandlung von Datentypen
+		// Allgemeines Vorgehen: (gewünschter Datentyp) alterDatentyp
+		// Numerische Umwandlung meist unkompliziert
+		
+		System.out.println("Genaue Kommazahl: " + genaueKommazahl);
+		int cutNumber = (byte) genaueKommazahl;
+		System.out.println("Abgeschnittene Zahl: " + cutNumber);
+		double longerNumber = (double) cutNumber;
+		System.out.println("Kommazahl aus Ganzzahl: " + longerNumber);
+		
+		// int oneOrZero = (int) wahrheitsWert; -> nicht machbar
+		
+		// Nicht-numerisches Casting (Textbasiert), komplexe Datentypen
+		// String charToString = (String) buchstabe; -> nicht machbar
+		// Verwenden der String-Klasse:
+		String charToString1 = String.valueOf(buchstabe);
+		
+		// Verwenden der Character-Klasse (Wrapper-Klasse):
+		String charToString2 = Character.toString(buchstabe);
+		
+		// Hinzufügen einer leeren Zeichenkette (leer = ohne Leerzeichen)
+		String charToString3 = buchstabe + " ";
+		
+		System.out.println("Ein String aus einem Char: " + charToString3);
+		
+		// Strings
+		// absoluter Pfad:
+		String absoluterPfad = "C:/user/name/.."; // -> führt öfter zu Problemen
+		// relativer Pfad:
+		String relativerPfad = "res/meinFoto.png";		
+		
 		// komplexe Datentypen
 		String text1 = new String("abc");		
 		// oder 
-		String text2 = "abc"; // -> ohne new klappt nur mit Strings!!!
-		
+		String text2 = "abc"; // -> ohne new klappt nur mit Strings!!!		
 		
 		List<String> list = new ArrayList<>();
 		HashMap<String, String> hauptStaedte = new HashMap<>();
@@ -40,10 +71,10 @@ public class Example {
 		hauptStaedte.put("Türkei", "Ankara");
 		
 		// Einen Wert aus der Hashmap erhalten (über Key)
-		System.out.println(hauptStaedte.get("Deutschland"));
+		//System.out.println(hauptStaedte.get("Deutschland"));
 		
 		// alle Werte der Hashmap ausgeben
-		System.out.println(hauptStaedte);
+		//System.out.println(hauptStaedte);
 		
 		// Klassenreferenzierung (Klassenobjekt) und Aufruf einer fremden Methode
 		Example example = new Example();
@@ -71,28 +102,7 @@ public class Example {
 
 	public void setGanzZahl(int ganzZahl) {
 		this.ganzZahl = ganzZahl;
-	}
-	
-	
-	  int S1 = 236;
-      double S2 = 13524687464674.0;
-      long S3 = 13_544;
-      
-      
-  
-  
-  public static void main (int S1 , double S2)   {
-    
-      System.out.println("Der Flächeninhaltet beträgt:"+ (long)(S1*S2)+" Meter²"); //casten
-      
-  }
-  public static void main (int S1 , double S2, long S3)   {
-    
-      System.out.println("Das Volumen beträgt:"+(long)(S1*S2*S3)+" Meter³");
-
-      int x = 1;
-      int y =++x+x++;
-      System.out.println(y);
-  }
+	}      
+     
 }
 
