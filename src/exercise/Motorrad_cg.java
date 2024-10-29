@@ -9,7 +9,22 @@ public class Motorrad_cg {
 	String marke;
 	int leistungKw;
 	String leistungPs;
+	int tankInhalt;
+	double verbrauch;
 	
+	public int getTankInhalt() {
+		return tankInhalt;
+	}
+	public void setTankInhalt(int tankInhalt) {
+		this.tankInhalt = tankInhalt;
+	}
+	public double getVerbrauch() {
+		return verbrauch;
+	}
+	public void setVerbrauch(double verbrauch) {
+//		System.out.println("Verbrauch = " + verbrauch);
+		this.verbrauch = verbrauch;
+	}
 	public int getLeistungKw() {
 		return leistungKw;
 	}
@@ -18,6 +33,10 @@ public class Motorrad_cg {
 	}
 	public String getLeistungPs() {
 		return leistungPs;
+	}
+	public int getLeistungPsInt() {
+		double temp = Double.parseDouble(leistungPs);
+		return (int) temp;
 	}
 	public void setLeistungPs(String leistungPs) {
 		this.leistungPs = leistungPs;
@@ -52,14 +71,26 @@ public class Motorrad_cg {
 	public void setDoubleBaujahr(double doubleBaujahr) {
 		this.doubleBaujahr = doubleBaujahr;
 	}
-	public Motorrad_cg(double kmStand, double bauJahr, String marke, int leistungKw) {
+	public void addDistance(int distance) {
+		calcFuelConsumption(getLeistungPsInt());
+//		if(verbrauch >= 18 || distance > 1000) {
+		if(verbrauch >= 18 || ((18 / getVerbrauch()) * 100) < distance) {
+			setTankInhalt(0);
+			System.out.println(distance + " km gefahren, " + ((18 / getVerbrauch()) * 100) + " l verbraucht. Tank ist nun leer.");
+		}
+		setKmStand(kmStand += distance);
+		System.out.println("Neuer kmStand: " + kmStand);
+	}
+	public Motorrad_cg(double kmStand, double bauJahr, String marke, int leistungKw, int tankinhalt) {
 		this.doubleKmStand = kmStand;
 		this.doubleBaujahr = bauJahr;
 		this.marke = marke + " motorrad";
 		this.leistungKw = leistungKw;
 		this.leistungPs = calcKwToHp(leistungKw);
+		this.tankInhalt = tankinhalt;
+		calcFuelConsumption(this.getLeistungPsInt());
 	}
-	public Motorrad_cg(int kmStand, int bauJahr, String marke, int leistungKw) {
+	public Motorrad_cg(int kmStand, int bauJahr, String marke, int leistungKw, int tankinhalt) {
 		this.kmStand = kmStand;
 		this.doubleKmStand = kmStand;
 		this.baujahr = bauJahr;
@@ -67,15 +98,19 @@ public class Motorrad_cg {
 		this.marke = marke + " motorrad";
 		this.leistungKw = leistungKw;
 		this.leistungPs = calcKwToHp(leistungKw);
+		this.tankInhalt = tankinhalt;
+		calcFuelConsumption(this.getLeistungPsInt());
 	}
-	public Motorrad_cg(double kmStand, double bauJahr, String marke, String leistungPs) {
+	public Motorrad_cg(double kmStand, double bauJahr, String marke, String leistungPs, int tankinhalt) {
 		this.doubleKmStand = kmStand;
 		this.doubleBaujahr = bauJahr;
 		this.marke = marke + " motorrad";
 		this.leistungPs = leistungPs;
 		this.leistungKw = calcHpToKw(leistungPs);
+		this.tankInhalt = tankinhalt;
+		calcFuelConsumption(this.getLeistungPsInt());
 	}
-	public Motorrad_cg(int kmStand, int bauJahr, String marke, String leistungPs) {
+	public Motorrad_cg(int kmStand, int bauJahr, String marke, String leistungPs, int tankinhalt) {
 		this.kmStand = kmStand;
 		this.doubleKmStand = kmStand;
 		this.baujahr = bauJahr;
@@ -83,6 +118,8 @@ public class Motorrad_cg {
 		this.marke = marke + " motorrad";
 		this.leistungPs = leistungPs;
 		this.leistungKw = calcHpToKw(leistungPs);
+		this.tankInhalt = tankinhalt;
+		calcFuelConsumption(this.getLeistungPsInt());
 	}
 	public Motorrad_cg() {}
 	public void print() {
@@ -100,6 +137,8 @@ public class Motorrad_cg {
 				+ ",\t\n Marke=" + marke
 				+ ",\t\n Leistung [kw]=" + leistungKw + "\n"
 				+ ",\t\n Leistung [ps]=" + leistungPs + "\n"
+				+ ",\t\n Tankinhalt [l]=" + tankInhalt + "\n"
+				+ ",\t\n Verbrauch / 100km [l]=" + verbrauch + "\n"
 				+ "]";
 	}
 	public void printWithTab() {
@@ -107,9 +146,12 @@ public class Motorrad_cg {
 		System.out.println("\tKilometerstand: "+kmStand);
 		System.out.println("\tLeistung [PS]: "+leistungPs);
 		System.out.println("\tLeistung [KW]: "+leistungKw);
+		System.out.println("\tTankinhalt [l]: "+tankInhalt);
+		System.out.println("\tVerbrauch / 100km [l]: "+verbrauch);
 		System.out.println("\tMarke: "+marke);
 	}
 	public void beispiel() {
+		int count = 0;
 		System.out.println();
 		System.out.println("Meine Wunschliste:");
 		System.out.println();
@@ -117,40 +159,75 @@ public class Motorrad_cg {
 				15000,
 				2010,
 				"bmw",
-				50
+				50,
+				18
 				);
-		obj1.print();
+		System.out.println("Motorrad "+(++count)+":");
+		obj1.printWithTab();
 		obj1.setBaujahr(1990);
-		obj1.setKmStand(1000);
+		obj1.addDistance(1050);
 		obj1.setLeistungKw(40);
 		obj1.setMarke("abc");
-		obj1.print();
-		Motorrad_cg obj2 = new Motorrad_cg(
+		if(obj1.isFuelEmpty()) {
+			obj1.refillFuel();
+		}
+		System.out.println();
+		System.out.println("Motorrad "+(count)+": (neue Werte)");
+		obj1.printWithTab();
+		obj1 = new Motorrad_cg(
 				150000,
 				2010,
 				"yamaha",
-				"60"
+				"60",
+				25
 				);
-		obj2.print();
+		obj1.addDistance(50);
+		if(obj1.isFuelEmpty()) {
+			obj1.refillFuel();
+		}
 		System.out.println();
-		System.out.println("Motorrad 1:");
+		System.out.println("Motorrad "+(++count)+":");
 		obj1.printWithTab();
-		System.out.println();
-		System.out.println("Motorrad 2:");
-		obj2.printWithTab();
 	}
-	String calcKwToHp(double kw) {
+	private String calcKwToHp(double kw) {
 		return String.valueOf(leistungKw * 1.341);
 	}
-	String calcKwToHp(int kw) {
+	private String calcKwToHp(int kw) {
 		return String.valueOf(kw * 1.341);
 	}
-	int calcHpToKw(double ps) {
+	private int calcHpToKw(double ps) {
+		
 		return (int) (ps * 0.7457);
 	}
-	int calcHpToKw(String ps) {
+	private int calcHpToKw(String ps) {
 		double result = Double.valueOf(ps);
-		result = Double.parseDouble(ps);
+//		result = Double.parseDouble(ps);
 		return (int) (result * 0.7457);
+	}
+	private boolean isFuelEmpty() {
+		if(getTankInhalt() <= 0) {
+			System.out.println("Tank ist leer! Bitte tanken!");
+			return true;
+		} else {
+			System.out.println("Der Tank hat noch " + (getTankInhalt() - getVerbrauch()) + " Liter");
+			return false;
+		}
+	}
+//	private boolean isFuelEmpty() {
+//		return tankInhalt <= 0;
+//	}
+	private void refillFuel() {
+		setTankInhalt(18);
+	}
+	private void calcFuelConsumption(int leistungPs) {
+		if(leistungPs < 5) {
+			setVerbrauch(2.5);
+		} else if(leistungPs >= 5 && leistungPs < 15) {
+			setVerbrauch(3.5);
+		} else if(leistungPs >= 15 && leistungPs < 48) {
+			setVerbrauch(5.5);
+		} else /* if(leistungPs > 48)*/ {
+			setVerbrauch(6);
+		}
 	}
 }
