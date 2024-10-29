@@ -6,6 +6,9 @@ public class Motorrad_nn {
 	String marke;
 	int leistungKw;
 	int leistungPs;
+	int tankInhalt;
+	double verbrauch;
+	int fuel;
 
 	/**
 	 * @return the kmStand
@@ -67,19 +70,57 @@ public class Motorrad_nn {
 	public void setLeistungPs(int leistungPs) {
 		this.leistungPs = leistungPs;
 	}
+	/**
+	 * @return the tankInhalt
+	 */
+	public int getTankInhalt() {
+		return tankInhalt;
+	}
+	/**
+	 * @param tankInhalt the tankInhalt to set
+	 */
+	public void setTankInhalt(int tankInhalt) {
+		this.tankInhalt = tankInhalt;
+	}
+	/**
+	 * @return the verbrauch
+	 */
+	public double getVerbrauch() {
+		return verbrauch;
+	}
+	/**
+	 * @param verbrauch the verbrauch to set
+	 */
+	public void setVerbrauch(double verbrauch) {
+		this.verbrauch = verbrauch;
+	}
+	/**
+	 * @return the fuel
+	 */
+	public int getFuel() {
+		return fuel;
+	}
+	/**
+	 * @param fuel the fuel to set
+	 */
+	public void setFuel(int fuel) {
+		this.fuel = fuel;
+	}
 
 	public Motorrad_nn(
 			int kmStand,
 			int bauJahr,
 			String marke,
 			int leistungKw,
-			int leistungPs
+			int leistungPs,
+			int fuel
 	) {
 		this.kmStand = kmStand;
 		this.bauJahr = bauJahr;
 		this.marke = marke;
 		this.leistungKw = leistungKw;
 		this.leistungPs = leistungPs;
+		this.fuel = fuel;
 	}
 
 	// Umwandeln kmStand und bauJahr zu double
@@ -94,6 +135,7 @@ public class Motorrad_nn {
 		System.out.println("Marke: " + getMarke() + " Motorrad");
 		System.out.println("LeistungKw: " + getLeistungKw());
 		System.out.println("LeistungPs: " + getLeistungPs());
+		System.out.println("Fuel: " + getFuel());
 		// Ausgeben double Vars auf der Konsole
 		System.out.println("DoubleKmStand: " + doubleKmStand);
 		System.out.println("DoubleBauJahr: " + doubleBauJahr);
@@ -106,5 +148,36 @@ public class Motorrad_nn {
 	public double calcPsToKw (double ps) {
 		return ps * 0.7457;
 	}
+	
+	public boolean isFuelEmpty () {
+		int tankInhaltJetzt = getTankInhalt();
+		if (tankInhaltJetzt == 0) {
+			System.out.println("Tank ist leer! Bitte tanken!");
+			return true;
+		} else {
+			System.err.printf("der Tank hat noch " + tankInhaltJetzt + " Liter");
+			return false;
+		}
+	}
+	
+	public void refillFuel () {
+		setFuel(18);
+	}
+	
+	public void calcFuelConsumption(int leistungPs) {
+		if ( leistungPs < 5 ) {
+			System.out.println("Verbrauch 2,5 Liter / 100km");
+			setVerbrauch(2.5);
+		} else if ( leistungPs > 5 && leistungPs < 15 ) {
+			System.out.println("Verbrauch 3,5 Liter / 100km");
+			setVerbrauch(3.5);
+		} else if (leistungPs > 15 && leistungPs < 48) {
+			System.out.println("Verbrauch 4,5 Liter / 100km");
+			setVerbrauch(4.5);
+		} else {
+			System.out.println("Verbrauch 6 Liter / 100km");
+			setVerbrauch(6);
+		}
+	} 
 
 }
