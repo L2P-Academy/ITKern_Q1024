@@ -8,7 +8,6 @@ public class Motorrad_nn {
 	int leistungPs;
 	int tankInhalt;
 	double verbrauch;
-	int fuel;
 
 	/**
 	 * @return the kmStand
@@ -94,18 +93,6 @@ public class Motorrad_nn {
 	public void setVerbrauch(double verbrauch) {
 		this.verbrauch = verbrauch;
 	}
-	/**
-	 * @return the fuel
-	 */
-	public int getFuel() {
-		return fuel;
-	}
-	/**
-	 * @param fuel the fuel to set
-	 */
-	public void setFuel(int fuel) {
-		this.fuel = fuel;
-	}
 
 	public Motorrad_nn(
 			int kmStand,
@@ -113,14 +100,14 @@ public class Motorrad_nn {
 			String marke,
 			int leistungKw,
 			int leistungPs,
-			int fuel
+			int tankInhalt
 	) {
 		this.kmStand = kmStand;
 		this.bauJahr = bauJahr;
 		this.marke = marke;
 		this.leistungKw = leistungKw;
 		this.leistungPs = leistungPs;
-		this.fuel = fuel;
+		this.tankInhalt = tankInhalt;
 	}
 
 	// Umwandeln kmStand und bauJahr zu double
@@ -135,7 +122,7 @@ public class Motorrad_nn {
 		System.out.println("Marke: " + getMarke() + " Motorrad");
 		System.out.println("LeistungKw: " + getLeistungKw());
 		System.out.println("LeistungPs: " + getLeistungPs());
-		System.out.println("Fuel: " + getFuel());
+		System.out.println("TankInhalt: " + getTankInhalt());
 		// Ausgeben double Vars auf der Konsole
 		System.out.println("DoubleKmStand: " + doubleKmStand);
 		System.out.println("DoubleBauJahr: " + doubleBauJahr);
@@ -150,28 +137,29 @@ public class Motorrad_nn {
 	}
 	
 	public boolean isFuelEmpty () {
+		boolean isEmpty = getTankInhalt() <= 0;
 		int tankInhaltJetzt = getTankInhalt();
-		if (tankInhaltJetzt == 0) {
+		if (isEmpty) {
 			System.out.println("Tank ist leer! Bitte tanken!");
 			return true;
 		} else {
-			System.err.printf("der Tank hat noch " + tankInhaltJetzt + " Liter");
+			System.out.println("der Tank hat noch " + tankInhaltJetzt + " Liter");
 			return false;
 		}
 	}
 	
 	public void refillFuel () {
-		setFuel(18);
+		setTankInhalt(18);
 	}
 	
 	public void calcFuelConsumption(int leistungPs) {
-		if ( leistungPs < 5 ) {
+		if ( leistungPs <= 5 ) {
 			System.out.println("Verbrauch 2,5 Liter / 100km");
 			setVerbrauch(2.5);
-		} else if ( leistungPs > 5 && leistungPs < 15 ) {
+		} else if ( leistungPs > 5 && leistungPs <= 15 ) {
 			System.out.println("Verbrauch 3,5 Liter / 100km");
 			setVerbrauch(3.5);
-		} else if (leistungPs > 15 && leistungPs < 48) {
+		} else if (leistungPs > 15 && leistungPs <= 48) {
 			System.out.println("Verbrauch 4,5 Liter / 100km");
 			setVerbrauch(4.5);
 		} else {
