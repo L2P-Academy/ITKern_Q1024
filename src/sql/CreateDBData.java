@@ -8,8 +8,10 @@ import java.sql.SQLException;
 
 public class CreateDBData {
 
-		String dbname = "pc";
+		String dbname = "computer";
 		boolean PERMIT_DELETE_FROM = false;
+		boolean PERMIT_CREATE_TABLE = false;
+		boolean PERMIT_DROP_TABLE = false;
 		private String tablename_pc_case = "pc_case";
 		private String tablename_pc_graphicscard = "pc_graphics_card";
 		private String tablename_pc_ram = "pc_ram";
@@ -18,49 +20,46 @@ public class CreateDBData {
 				tablename_pc_graphicscard,
 				tablename_pc_ram
 		};
-		boolean SHOW_SQL_QUERY = true;
+		boolean SHOW_SQL_QUERY_PREPARED_STATEMENT = false;
 		/*
 		 * code with prepared statements won't let you read resulting sql query in cleartext
 		 */
-		boolean SHOW_PSEUDO_SQL_QUERY = true;
+		boolean SHOW_SQL_QUERY = true;
 		
 		public static void main(String[] args) {
 			new CreateDBData().dbFun();
 		}
-		private static void helloworld() {
-			System.out.println("Hello World");
-		}
 		public void dbFun() {
-			Connection connection = getConnection();
+			getConnection();
 		    if(connection == null) {
 		    	System.out.println("Database not connected!");
 		    }else{
 		    	System.out.println("Database connected!");
+		    	dropTable_pc_case();
+		    	dropTable_2();
+		    	dropTable_3();
+		    	createTable_pc_case();
+		    	createTable_2();
+		    	createTable_3();
+		    	insertRandomData();
 		    	for(String tablename_: tablenames) {
 		    		printData(connection, tablename_);
 		    	}
-		    	insertRandomData();
 		    	closeDBConnection(connection);
 		    }
 		}
-		private Connection getConnection() {
+		Connection connection = null;
+		private void getConnection() {
 			 String url = "jdbc:mysql://localhost:3306/" + dbname;
 			 String username = "root";
 			 String password = "";
-			 System.out.println("Connecting database ...");
-			 try {
-				 Connection connection = DriverManager.getConnection(url, username, password);
-		    	try {
-					if(connection.isClosed()) {
-						System.out.println("ouch");
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-		    	return connection;
-			 } catch (SQLException e) {
-			     //throw new IllegalStateException("Cannot connect the database!", e);
-				 return null;
+			 if(connection == null) {
+				 System.out.println("Connecting database ...");
+				 try {
+					 connection = DriverManager.getConnection(url, username, password);
+				 } catch (SQLException e) {
+					 e.printStackTrace();
+				 }
 			 }
 		}
 		private void printData(Connection connection, String tablename) {
@@ -69,7 +68,9 @@ public class CreateDBData {
 					System.out.println("Connection is closed :O");
 				} else {
 					String sql = "select * from " + tablename + ";";
-					System.out.println("Query: '" + sql + "'");
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
 					//PreparedStatement preparedStatement = connection.prepareStatement(sql).executeQuery()
 					//ResultSet resultSet = preparedStatement.executeQuery();
 					ResultSet resultSet =  connection.prepareStatement(sql).executeQuery();
@@ -91,7 +92,7 @@ public class CreateDBData {
 		}
 		public void deleteFromTable_pc_case() {
 			if(PERMIT_DELETE_FROM) {
-				Connection connection = getConnection();
+				getConnection();
 				try {
 					connection
 						.prepareStatement("delete from " + tablename_pc_case + ";")
@@ -101,12 +102,122 @@ public class CreateDBData {
 				}
 			}
 		}
+		public void createTable_pc_case() {
+			if(PERMIT_CREATE_TABLE) {
+				getConnection();
+				try {
+					String sql = "create table if not exists " + tablename_pc_case + " ("
+							+ "id int primary key auto_increment, "
+							+ "name varchar(100), "
+							+ "iscolored int"
+							+ ");";
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
+					connection
+					.prepareStatement(sql)
+					.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void createTable_2() {
+			if(PERMIT_CREATE_TABLE) {
+				getConnection();
+				try {
+					String sql = "create table if not exists " + tablename_pc_graphicscard + " ("
+							+ "id int primary key auto_increment, "
+							+ "name varchar(100)"
+							+ ");";
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
+					connection
+					.prepareStatement(sql)
+					.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void createTable_3() {
+			if(PERMIT_CREATE_TABLE) {
+				getConnection();
+				try {
+					String sql = "create table if not exists " + tablename_pc_ram + " ("
+							+ "id int primary key auto_increment, "
+							+ "name varchar(100)"
+							+ ");";
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
+					connection
+					.prepareStatement(sql)
+					.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void dropTable_pc_case() {
+			if(PERMIT_DROP_TABLE) {
+				getConnection();
+				try {
+					String sql = "drop table if exists " + tablename_pc_case + ";";
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
+					connection
+					.prepareStatement(sql)
+					.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void dropTable_2() {
+			if(PERMIT_DROP_TABLE) {
+				getConnection();
+				try {
+					String sql = "drop table if exists " + tablename_pc_graphicscard + ";";
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
+					connection
+					.prepareStatement(sql)
+					.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void dropTable_3() {
+			if(PERMIT_DROP_TABLE) {
+				getConnection();
+				try {
+					String sql = "drop table if exists " + tablename_pc_ram + ";";
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
+					connection
+					.prepareStatement(sql)
+					.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		public void deleteFromTable_2() {
 			if(PERMIT_DELETE_FROM) {
-				Connection connection = getConnection();
+				getConnection();
 				try {
+					String sql = "delete from " + tablename_pc_graphicscard + ";";
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
 					connection
-						.prepareStatement("delete from " + tablename_pc_graphicscard + ";")
+						.prepareStatement(sql)
 						.executeQuery();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -115,10 +226,14 @@ public class CreateDBData {
 		}
 		public void deleteFromTable_3() {
 			if(PERMIT_DELETE_FROM) {
-				Connection connection = getConnection();
+				getConnection();
 				try {
+					String sql = "delete from " + tablename_pc_ram + ";";
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
 					connection
-					.prepareStatement("delete from " + tablename_pc_graphicscard + ";")
+					.prepareStatement(sql)
 					.executeQuery();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -162,71 +277,71 @@ public class CreateDBData {
 			insertDataTo_3("M378B5273BH1-CH9");
 		}
 		private void insertDataTo_pc_case(String name, int isColored) {
-			Connection connection = getConnection();
+			getConnection();
 			if(connection != null) {
 				try {
 					String sql = "insert into " + tablename_pc_case + " (name, iscolored) values (?,?);";
 					int cntPos = 1;
+					if(SHOW_SQL_QUERY_PREPARED_STATEMENT) {
+						System.out.println(sql);
+					}
+					if(SHOW_SQL_QUERY) {
+						String temp = "insert into " + tablename_pc_case + " (name, iscolored) values ("
+								+ "'"+name+"', "
+								+ isColored
+								+ ");";
+						System.out.println(temp);
+					}
 					PreparedStatement preparedStatement =  connection.prepareStatement(sql);
 					preparedStatement.setString(cntPos++, name);
 					preparedStatement.setInt(cntPos++, isColored);
 					preparedStatement.executeUpdate();
-					if(SHOW_SQL_QUERY) {
-						System.out.println("Query: '" + sql + "'");
-					}
-					if(SHOW_PSEUDO_SQL_QUERY) {
-						sql = "insert into " + tablename_pc_case + " (name, iscolored) values ("
-								+ name + ", "
-								+ isColored
-								+ ");";
-						System.out.println("( Query: '" + sql + "' )");
-					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 		private void insertDataTo_2(String name) {
-			Connection connection = getConnection();
+			getConnection();
 			if(connection != null) {
 				try {
-					String sql = "insert into " + tablename_pc_graphicscard + " (name) values (?,?);";
+					String sql = "insert into " + tablename_pc_graphicscard + " (name) values (?);";
 					int cntPos = 1;
+					if(SHOW_SQL_QUERY_PREPARED_STATEMENT) {
+						System.out.println(sql);
+					}
+					if(SHOW_SQL_QUERY) {
+						String temp = "insert into " + tablename_pc_graphicscard + " (name) values ("
+								+ "'"+name+"'"
+								+ ");";
+						System.out.println(temp);
+					}
 					PreparedStatement preparedStatement =  connection.prepareStatement(sql);
 					preparedStatement.setString(cntPos++, name);
 					preparedStatement.executeUpdate();
-					if(SHOW_SQL_QUERY) {
-						System.out.println("Query: '" + sql + "'");
-					}
-					if(SHOW_PSEUDO_SQL_QUERY) {
-						sql = "insert into " + tablename_pc_graphicscard + " (name) values ("
-								+ name + ", "
-								+ ");";
-						System.out.println("( Query: '" + sql + "' )");
-					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 		private void insertDataTo_3(String name) {
-			Connection connection = getConnection();
+			getConnection();
 			if(connection != null) {
 				try {
-					String sql = "insert into " + tablename_pc_ram + " (name) values (?,?);";
+					String sql = "insert into " + tablename_pc_ram + " (name) values (?);";
 					int cntPos = 1;
+					if(SHOW_SQL_QUERY_PREPARED_STATEMENT) {
+						System.out.println(sql);
+					}
+					if(SHOW_SQL_QUERY) {
+						String temp = "insert into " + tablename_pc_ram + " (name) values ("
+								+ "'"+name+"'"
+								+ ");";
+						System.out.println(temp);
+					}
 					PreparedStatement preparedStatement =  connection.prepareStatement(sql);
 					preparedStatement.setString(cntPos++, name);
 					preparedStatement.executeUpdate();
-					if(SHOW_SQL_QUERY) {
-						System.out.println("Query: '" + sql + "'");
-					}
-					if(SHOW_PSEUDO_SQL_QUERY) {
-						sql = "insert into " + tablename_pc_ram + " (name) values ("
-								+ name + ", "
-								+ ");";
-						System.out.println("( Query: '" + sql + "' )");
-					}
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
