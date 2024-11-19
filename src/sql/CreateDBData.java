@@ -1,0 +1,236 @@
+package sql;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class CreateDBData {
+
+		String dbname = "pc";
+		boolean PERMIT_DELETE_FROM = false;
+		private String tablename_pc_case = "pc_case";
+		private String tablename_pc_graphicscard = "pc_graphics_card";
+		private String tablename_pc_ram = "pc_ram";
+		private String [] tablenames = new String[] {
+				tablename_pc_case,
+				tablename_pc_graphicscard,
+				tablename_pc_ram
+		};
+		boolean SHOW_SQL_QUERY = true;
+		/*
+		 * code with prepared statements won't let you read resulting sql query in cleartext
+		 */
+		boolean SHOW_PSEUDO_SQL_QUERY = true;
+		
+		public static void main(String[] args) {
+			new CreateDBData().dbFun();
+		}
+		private static void helloworld() {
+			System.out.println("Hello World");
+		}
+		public void dbFun() {
+			Connection connection = getConnection();
+		    if(connection == null) {
+		    	System.out.println("Database not connected!");
+		    }else{
+		    	System.out.println("Database connected!");
+		    	for(String tablename_: tablenames) {
+		    		printData(connection, tablename_);
+		    	}
+		    	insertRandomData();
+		    	closeDBConnection(connection);
+		    }
+		}
+		private Connection getConnection() {
+			 String url = "jdbc:mysql://localhost:3306/" + dbname;
+			 String username = "root";
+			 String password = "";
+			 System.out.println("Connecting database ...");
+			 try {
+				 Connection connection = DriverManager.getConnection(url, username, password);
+		    	try {
+					if(connection.isClosed()) {
+						System.out.println("ouch");
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		    	return connection;
+			 } catch (SQLException e) {
+			     //throw new IllegalStateException("Cannot connect the database!", e);
+				 return null;
+			 }
+		}
+		private void printData(Connection connection, String tablename) {
+			try {
+				if(connection.isClosed()) {
+					System.out.println("Connection is closed :O");
+				} else {
+					String sql = "select * from " + tablename + ";";
+					System.out.println("Query: '" + sql + "'");
+					//PreparedStatement preparedStatement = connection.prepareStatement(sql).executeQuery()
+					//ResultSet resultSet = preparedStatement.executeQuery();
+					ResultSet resultSet =  connection.prepareStatement(sql).executeQuery();
+					// Does not work with eclipse, without maven :O
+//		    		System.out.print(Table.read().db(resultSet).print());
+				}
+	    	} catch (Exception e) {
+	    		e.printStackTrace();
+			}
+		}
+		private void closeDBConnection (Connection connection) {
+			if(connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void deleteFromTable_pc_case() {
+			if(PERMIT_DELETE_FROM) {
+				Connection connection = getConnection();
+				try {
+					connection
+						.prepareStatement("delete from " + tablename_pc_case + ";")
+						.executeQuery();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void deleteFromTable_2() {
+			if(PERMIT_DELETE_FROM) {
+				Connection connection = getConnection();
+				try {
+					connection
+						.prepareStatement("delete from " + tablename_pc_graphicscard + ";")
+						.executeQuery();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void deleteFromTable_3() {
+			if(PERMIT_DELETE_FROM) {
+				Connection connection = getConnection();
+				try {
+					connection
+					.prepareStatement("delete from " + tablename_pc_graphicscard + ";")
+					.executeQuery();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		public void insertRandomData() {
+			deleteFromTable_pc_case();
+			insertDataTo_pc_case("rudolf", 1);
+			// Corsair
+			insertDataTo_pc_case("4000D Airflow", 1);
+			// Corsair
+			insertDataTo_pc_case("3000D Airflow", 1);
+			// Sharkoon
+			insertDataTo_pc_case("VS4-V", 1);
+			// Sharkoon
+			insertDataTo_pc_case("VS8", 1);
+			// NZXT
+			insertDataTo_pc_case("H9 Flow", 1);
+			/////////////////////////////////////////
+			deleteFromTable_2();
+			// MSI
+			insertDataTo_2("GeForce RTX 3060");
+			// MSI
+			insertDataTo_2("GeForce GT 710");
+			// NVidia
+			insertDataTo_2("GeForce RTX 4080");
+			// Asus
+			insertDataTo_2("GeForce RTX 4060");
+			/////////////////////////////////////////
+			deleteFromTable_3();
+			// Corsair, 2 GB
+			insertDataTo_3("CT51264BD160BJ");
+			// Corsair, 2 GB
+			insertDataTo_3("CMY8GX3M2A1866C9");
+			// Crucial, 2 GB
+			insertDataTo_3("CT4G4DFS824A");
+			// Kingston, 2 GB
+			insertDataTo_3("DDR3-RAM");
+			// Samsung, 4 GB, DDR3-1333 MHz
+			insertDataTo_3("M378B5273BH1-CH9");
+		}
+		private void insertDataTo_pc_case(String name, int isColored) {
+			Connection connection = getConnection();
+			if(connection != null) {
+				try {
+					String sql = "insert into " + tablename_pc_case + " (name, iscolored) values (?,?);";
+					int cntPos = 1;
+					PreparedStatement preparedStatement =  connection.prepareStatement(sql);
+					preparedStatement.setString(cntPos++, name);
+					preparedStatement.setInt(cntPos++, isColored);
+					preparedStatement.executeUpdate();
+					if(SHOW_SQL_QUERY) {
+						System.out.println("Query: '" + sql + "'");
+					}
+					if(SHOW_PSEUDO_SQL_QUERY) {
+						sql = "insert into " + tablename_pc_case + " (name, iscolored) values ("
+								+ name + ", "
+								+ isColored
+								+ ");";
+						System.out.println("( Query: '" + sql + "' )");
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		private void insertDataTo_2(String name) {
+			Connection connection = getConnection();
+			if(connection != null) {
+				try {
+					String sql = "insert into " + tablename_pc_graphicscard + " (name) values (?,?);";
+					int cntPos = 1;
+					PreparedStatement preparedStatement =  connection.prepareStatement(sql);
+					preparedStatement.setString(cntPos++, name);
+					preparedStatement.executeUpdate();
+					if(SHOW_SQL_QUERY) {
+						System.out.println("Query: '" + sql + "'");
+					}
+					if(SHOW_PSEUDO_SQL_QUERY) {
+						sql = "insert into " + tablename_pc_graphicscard + " (name) values ("
+								+ name + ", "
+								+ ");";
+						System.out.println("( Query: '" + sql + "' )");
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		private void insertDataTo_3(String name) {
+			Connection connection = getConnection();
+			if(connection != null) {
+				try {
+					String sql = "insert into " + tablename_pc_ram + " (name) values (?,?);";
+					int cntPos = 1;
+					PreparedStatement preparedStatement =  connection.prepareStatement(sql);
+					preparedStatement.setString(cntPos++, name);
+					preparedStatement.executeUpdate();
+					if(SHOW_SQL_QUERY) {
+						System.out.println("Query: '" + sql + "'");
+					}
+					if(SHOW_PSEUDO_SQL_QUERY) {
+						sql = "insert into " + tablename_pc_ram + " (name) values ("
+								+ name + ", "
+								+ ");";
+						System.out.println("( Query: '" + sql + "' )");
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+}
