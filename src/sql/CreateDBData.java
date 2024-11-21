@@ -9,9 +9,9 @@ import java.sql.SQLException;
 public class CreateDBData {
 
 		String dbname = "computer";
-		boolean PERMIT_DELETE_FROM = false;
-		boolean PERMIT_CREATE_TABLE = false;
-		boolean PERMIT_DROP_TABLE = false;
+		boolean PERMIT_DELETE_FROM = true;
+		boolean PERMIT_CREATE_TABLE = true;
+		boolean PERMIT_DROP_TABLE = true;
 		private String tablename_pc_case = "pc_case";
 		private String tablename_pc_graphicscard = "pc_graphics_card";
 		private String tablename_pc_ram = "pc_ram";
@@ -24,6 +24,7 @@ public class CreateDBData {
 				tablename_pc_case,
 				tablename_pc_graphicscard,
 				tablename_pc_ram,
+				tablename_pc_ram_config,
 				tablename_pc_disk,
 				tablename_pc_motherboard,
 				tablename_pc_computer,
@@ -59,6 +60,11 @@ public class CreateDBData {
 		    	createTable_pc_case();
 		    	createTable_pc_graphicscard();
 		    	createTable_pc_ram();
+		    	createTable_pc_disk();
+		    	createTable_pc_ram_config();
+		    	createTable_pc_motherboard();
+		    	createTable_pc_marke();
+		    	createTable_pc_computer();
 		    	insertRandomData();
 		    	for(String tablename_: tablenames) {
 		    		printData(connection, tablename_);
@@ -140,21 +146,6 @@ public class CreateDBData {
 					+ ");";
 			createTable(sql);
 		}
-		private void createTable(String sql) {
-			if(PERMIT_CREATE_TABLE) {
-				getConnection();
-				try {
-					if(SHOW_SQL_QUERY) {
-						System.out.println(sql);
-					}
-					connection
-					.prepareStatement(sql)
-					.executeUpdate();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
 		public void createTable_pc_disk() {
 			String sql = "create table if not exists " + tablename_pc_disk + " ("
 					+ "id int primary key auto_increment, "
@@ -171,23 +162,44 @@ public class CreateDBData {
 					+ ");";
 			createTable(sql);
 		}
+		public void createTable_pc_motherboard() {
+			String sql = "create table if not exists " + tablename_pc_motherboard + " ("
+					+ "id int primary key auto_increment, "
+					+ "name varchar(100)"
+					+ ");";
+			createTable(sql);
+		}
+		public void createTable_pc_computer() {
+			String sql = "create table if not exists " + tablename_pc_computer + " ("
+					+ "id int primary key auto_increment, "
+					+ "name varchar(100)"
+					+ ");";
+			createTable(sql);
+		}
+		public void createTable_pc_marke() {
+			String sql = "create table if not exists " + tablename_pc_marke + " ("
+					+ "id int primary key auto_increment, "
+					+ "name varchar(100)"
+					+ ");";
+			createTable(sql);
+		}
 		public void dropTable_pc_case() {
-			dropTable_pc_case(tablename_pc_case);
+			dropTable(tablename_pc_case);
 		}
 		public void dropTable_pc_graphicscard() {
-			dropTable_pc_case(tablename_pc_graphicscard);
+			dropTable(tablename_pc_graphicscard);
 		}
 		public void dropTable_pc_ram() {
-			dropTable_pc_case(tablename_pc_ram);
+			dropTable(tablename_pc_ram);
 		}
 		public void dropTable_pc_ram_config() {
-			dropTable_pc_case(tablename_pc_ram_config);
+			dropTable(tablename_pc_ram_config);
 		}
 		public void dropTable_pc_disk_space() {
-			dropTable_pc_case(tablename_pc_disk);
+			dropTable(tablename_pc_disk);
 		}
 		public void dropTable_pc_marke() {
-			dropTable_pc_case(tablename_pc_marke);
+			dropTable(tablename_pc_marke);
 		}
 		public void deleteFromTable_pc_graphicscard() {
 			deleteFromTable(tablename_pc_graphicscard);
@@ -315,17 +327,32 @@ public class CreateDBData {
 					}
 					connection
 					.prepareStatement(sql)
-					.executeQuery();
+					.executeUpdate();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-		private void dropTable_pc_case(String tablename) {
+		private void dropTable(String tablename) {
 			if(PERMIT_DROP_TABLE) {
 				getConnection();
 				try {
 					String sql = "drop table if exists " + tablename + ";";
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
+					connection
+					.prepareStatement(sql)
+					.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		private void createTable(String sql) {
+			if(PERMIT_CREATE_TABLE) {
+				getConnection();
+				try {
 					if(SHOW_SQL_QUERY) {
 						System.out.println(sql);
 					}
