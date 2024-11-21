@@ -57,6 +57,12 @@ public class CreateDBData {
 		    	dropTable_pc_case();
 		    	dropTable_pc_graphicscard();
 		    	dropTable_pc_ram();
+		    	dropTable_pc_disk_space();
+		    	dropTable_pc_ram_config();
+		    	dropTable_pc_motherboard();
+		    	dropTable_pc_marke();
+		    	dropTable_pc_computer();
+		    	///////////////////////
 		    	createTable_pc_case();
 		    	createTable_pc_graphicscard();
 		    	createTable_pc_ram();
@@ -128,7 +134,7 @@ public class CreateDBData {
 			String sql = "create table if not exists " + tablename_pc_case + " ("
 					+ "id int primary key auto_increment, "
 					+ "name varchar(100), "
-					+ "iscolored int"
+					+ "isilluminated int"
 					+ ");";
 			createTable(sql);
 		}
@@ -195,11 +201,17 @@ public class CreateDBData {
 		public void dropTable_pc_ram_config() {
 			dropTable(tablename_pc_ram_config);
 		}
+		public void dropTable_pc_motherboard() {
+			dropTable(tablename_pc_motherboard);
+		}
 		public void dropTable_pc_disk_space() {
 			dropTable(tablename_pc_disk);
 		}
 		public void dropTable_pc_marke() {
 			dropTable(tablename_pc_marke);
+		}
+		public void dropTable_pc_computer() {
+			dropTable(tablename_pc_computer);
 		}
 		public void deleteFromTable_pc_graphicscard() {
 			deleteFromTable(tablename_pc_graphicscard);
