@@ -15,16 +15,34 @@ public class CreateDBData {
 		private String tablename_pc_case = "pc_case";
 		private String tablename_pc_graphicscard = "pc_graphics_card";
 		private String tablename_pc_ram = "pc_ram";
+		private String tablename_pc_ram_config = "pc_ram_config";
+		private String tablename_pc_disk = "pc_disk";
+		private String tablename_pc_motherboard = "pc_motherboard";
+		private String tablename_pc_computer = "pc_computer";
+		private String tablename_pc_marke = "pc_marke";
 		private String [] tablenames = new String[] {
 				tablename_pc_case,
 				tablename_pc_graphicscard,
-				tablename_pc_ram
+				tablename_pc_ram,
+				tablename_pc_disk,
+				tablename_pc_motherboard,
+				tablename_pc_computer,
+				tablename_pc_marke
 		};
 		boolean SHOW_SQL_QUERY_PREPARED_STATEMENT = false;
 		/*
 		 * code with prepared statements won't let you read resulting sql query in cleartext
 		 */
 		boolean SHOW_SQL_QUERY = true;
+		/*
+		 * tables:
+		 * pc_case
+		 * pc_graphics_card
+		 * pc_ram
+		 * pc_disk_drive
+		 * pc_motherboard
+		 * pc_computer
+		 */
 		
 		public static void main(String[] args) {
 			new CreateDBData().dbFun();
@@ -36,11 +54,11 @@ public class CreateDBData {
 		    }else{
 		    	System.out.println("Database connected!");
 		    	dropTable_pc_case();
-		    	dropTable_2();
-		    	dropTable_3();
+		    	dropTable_pc_graphicscard();
+		    	dropTable_pc_ram();
 		    	createTable_pc_case();
-		    	createTable_2();
-		    	createTable_3();
+		    	createTable_pc_graphicscard();
+		    	createTable_pc_ram();
 		    	insertRandomData();
 		    	for(String tablename_: tablenames) {
 		    		printData(connection, tablename_);
@@ -85,32 +103,47 @@ public class CreateDBData {
 			if(connection != null) {
 				try {
 					connection.close();
+					connection = null;
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 		public void deleteFromTable_pc_case() {
-			if(PERMIT_DELETE_FROM) {
-				getConnection();
-				try {
-					connection
-						.prepareStatement("delete from " + tablename_pc_case + ";")
-						.executeQuery();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			deleteFromTable(tablename_pc_case);
+		}
+		public void deleteFromTable_pc_disk() {
+			deleteFromTable(tablename_pc_disk);
+		}
+		public void deleteFromTable_pc_motherboard() {
+			deleteFromTable(tablename_pc_motherboard);
 		}
 		public void createTable_pc_case() {
+			String sql = "create table if not exists " + tablename_pc_case + " ("
+					+ "id int primary key auto_increment, "
+					+ "name varchar(100), "
+					+ "iscolored int"
+					+ ");";
+			createTable(sql);
+		}
+		public void createTable_pc_graphicscard() {
+			String sql = "create table if not exists " + tablename_pc_graphicscard + " ("
+					+ "id int primary key auto_increment, "
+					+ "name varchar(100)"
+					+ ");";
+			createTable(sql);
+		}
+		public void createTable_pc_ram() {
+			String sql = "create table if not exists " + tablename_pc_ram + " ("
+					+ "id int primary key auto_increment, "
+					+ "name varchar(100)"
+					+ ");";
+			createTable(sql);
+		}
+		private void createTable(String sql) {
 			if(PERMIT_CREATE_TABLE) {
 				getConnection();
 				try {
-					String sql = "create table if not exists " + tablename_pc_case + " ("
-							+ "id int primary key auto_increment, "
-							+ "name varchar(100), "
-							+ "iscolored int"
-							+ ");";
 					if(SHOW_SQL_QUERY) {
 						System.out.println(sql);
 					}
@@ -122,123 +155,48 @@ public class CreateDBData {
 				}
 			}
 		}
-		public void createTable_2() {
-			if(PERMIT_CREATE_TABLE) {
-				getConnection();
-				try {
-					String sql = "create table if not exists " + tablename_pc_graphicscard + " ("
-							+ "id int primary key auto_increment, "
-							+ "name varchar(100)"
-							+ ");";
-					if(SHOW_SQL_QUERY) {
-						System.out.println(sql);
-					}
-					connection
-					.prepareStatement(sql)
-					.executeUpdate();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+		public void createTable_pc_disk() {
+			String sql = "create table if not exists " + tablename_pc_disk + " ("
+					+ "id int primary key auto_increment, "
+					+ "name varchar(100),"
+					+ "size_gb tinyint"
+					+ ");";
+			createTable(sql);
 		}
-		public void createTable_3() {
-			if(PERMIT_CREATE_TABLE) {
-				getConnection();
-				try {
-					String sql = "create table if not exists " + tablename_pc_ram + " ("
-							+ "id int primary key auto_increment, "
-							+ "name varchar(100)"
-							+ ");";
-					if(SHOW_SQL_QUERY) {
-						System.out.println(sql);
-					}
-					connection
-					.prepareStatement(sql)
-					.executeUpdate();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+		public void createTable_pc_ram_config() {
+			String sql = "create table if not exists " + tablename_pc_ram_config + " ("
+					+ "id int primary key auto_increment, "
+					+ "name varchar(100),"
+					+ "size_gb tinyint"
+					+ ");";
+			createTable(sql);
 		}
 		public void dropTable_pc_case() {
-			if(PERMIT_DROP_TABLE) {
-				getConnection();
-				try {
-					String sql = "drop table if exists " + tablename_pc_case + ";";
-					if(SHOW_SQL_QUERY) {
-						System.out.println(sql);
-					}
-					connection
-					.prepareStatement(sql)
-					.executeUpdate();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			dropTable_pc_case(tablename_pc_case);
 		}
-		public void dropTable_2() {
-			if(PERMIT_DROP_TABLE) {
-				getConnection();
-				try {
-					String sql = "drop table if exists " + tablename_pc_graphicscard + ";";
-					if(SHOW_SQL_QUERY) {
-						System.out.println(sql);
-					}
-					connection
-					.prepareStatement(sql)
-					.executeUpdate();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+		public void dropTable_pc_graphicscard() {
+			dropTable_pc_case(tablename_pc_graphicscard);
 		}
-		public void dropTable_3() {
-			if(PERMIT_DROP_TABLE) {
-				getConnection();
-				try {
-					String sql = "drop table if exists " + tablename_pc_ram + ";";
-					if(SHOW_SQL_QUERY) {
-						System.out.println(sql);
-					}
-					connection
-					.prepareStatement(sql)
-					.executeUpdate();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+		public void dropTable_pc_ram() {
+			dropTable_pc_case(tablename_pc_ram);
 		}
-		public void deleteFromTable_2() {
-			if(PERMIT_DELETE_FROM) {
-				getConnection();
-				try {
-					String sql = "delete from " + tablename_pc_graphicscard + ";";
-					if(SHOW_SQL_QUERY) {
-						System.out.println(sql);
-					}
-					connection
-						.prepareStatement(sql)
-						.executeQuery();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+		public void dropTable_pc_ram_config() {
+			dropTable_pc_case(tablename_pc_ram_config);
 		}
-		public void deleteFromTable_3() {
-			if(PERMIT_DELETE_FROM) {
-				getConnection();
-				try {
-					String sql = "delete from " + tablename_pc_ram + ";";
-					if(SHOW_SQL_QUERY) {
-						System.out.println(sql);
-					}
-					connection
-					.prepareStatement(sql)
-					.executeQuery();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+		public void dropTable_pc_disk_space() {
+			dropTable_pc_case(tablename_pc_disk);
+		}
+		public void dropTable_pc_marke() {
+			dropTable_pc_case(tablename_pc_marke);
+		}
+		public void deleteFromTable_pc_graphicscard() {
+			deleteFromTable(tablename_pc_graphicscard);
+		}
+		public void deleteFromTable_pc_ram() {
+			deleteFromTable(tablename_pc_ram);
+		}
+		public void deleteFromTable_pc_ram_config() {
+			deleteFromTable(tablename_pc_ram_config);
 		}
 		public void insertRandomData() {
 			deleteFromTable_pc_case();
@@ -254,27 +212,27 @@ public class CreateDBData {
 			// NZXT
 			insertDataTo_pc_case("H9 Flow", 1);
 			/////////////////////////////////////////
-			deleteFromTable_2();
+			deleteFromTable_pc_graphicscard();
 			// MSI
-			insertDataTo_2("GeForce RTX 3060");
+			insertDataTo_graphics_card("GeForce RTX 3060");
 			// MSI
-			insertDataTo_2("GeForce GT 710");
+			insertDataTo_graphics_card("GeForce GT 710");
 			// NVidia
-			insertDataTo_2("GeForce RTX 4080");
+			insertDataTo_graphics_card("GeForce RTX 4080");
 			// Asus
-			insertDataTo_2("GeForce RTX 4060");
+			insertDataTo_graphics_card("GeForce RTX 4060");
 			/////////////////////////////////////////
-			deleteFromTable_3();
+			deleteFromTable_pc_ram();
 			// Corsair, 2 GB
-			insertDataTo_3("CT51264BD160BJ");
+			insertDataTo_pc_ram("CT51264BD160BJ");
 			// Corsair, 2 GB
-			insertDataTo_3("CMY8GX3M2A1866C9");
+			insertDataTo_pc_ram("CMY8GX3M2A1866C9");
 			// Crucial, 2 GB
-			insertDataTo_3("CT4G4DFS824A");
+			insertDataTo_pc_ram("CT4G4DFS824A");
 			// Kingston, 2 GB
-			insertDataTo_3("DDR3-RAM");
+			insertDataTo_pc_ram("DDR3-RAM");
 			// Samsung, 4 GB, DDR3-1333 MHz
-			insertDataTo_3("M378B5273BH1-CH9");
+			insertDataTo_pc_ram("M378B5273BH1-CH9");
 		}
 		private void insertDataTo_pc_case(String name, int isColored) {
 			getConnection();
@@ -301,7 +259,7 @@ public class CreateDBData {
 				}
 			}
 		}
-		private void insertDataTo_2(String name) {
+		private void insertDataTo_graphics_card(String name) {
 			getConnection();
 			if(connection != null) {
 				try {
@@ -324,7 +282,7 @@ public class CreateDBData {
 				}
 			}
 		}
-		private void insertDataTo_3(String name) {
+		private void insertDataTo_pc_ram(String name) {
 			getConnection();
 			if(connection != null) {
 				try {
@@ -347,5 +305,36 @@ public class CreateDBData {
 				}
 			}
 		}
-
+		private void deleteFromTable(String tablename) {
+			if(PERMIT_DELETE_FROM) {
+				getConnection();
+				try {
+					String sql = "delete from " + tablename + ";";
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
+					connection
+					.prepareStatement(sql)
+					.executeQuery();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		private void dropTable_pc_case(String tablename) {
+			if(PERMIT_DROP_TABLE) {
+				getConnection();
+				try {
+					String sql = "drop table if exists " + tablename + ";";
+					if(SHOW_SQL_QUERY) {
+						System.out.println(sql);
+					}
+					connection
+					.prepareStatement(sql)
+					.executeUpdate();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 }
